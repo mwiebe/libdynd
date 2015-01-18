@@ -211,6 +211,7 @@ set(libdynd_SRC
     src/dynd/types/ndarrayarg_type.cpp
     src/dynd/types/option_type.cpp
     src/dynd/types/pointer_type.cpp
+    src/dynd/types/pow_dimsym_type.cpp
     src/dynd/types/property_type.cpp
     src/dynd/types/static_type_instances.cpp
     src/dynd/types/string_type.cpp
@@ -225,8 +226,8 @@ set(libdynd_SRC
     src/dynd/types/type_id.cpp
     src/dynd/types/type_pattern_match.cpp
     src/dynd/types/type_type.cpp
+    src/dynd/types/typevar_constructed_type.cpp
     src/dynd/types/typevar_dim_type.cpp
-    src/dynd/types/pow_dimsym_type.cpp
     src/dynd/types/typevar_type.cpp
     src/dynd/types/unary_expr_type.cpp
     src/dynd/types/var_dim_type.cpp
@@ -284,6 +285,7 @@ set(libdynd_SRC
     include/dynd/types/ndarrayarg_type.hpp
     include/dynd/types/option_type.hpp
     include/dynd/types/pointer_type.hpp
+    include/dynd/types/pow_dimsym_type.hpp
     include/dynd/types/string_type.hpp
     include/dynd/types/struct_type.hpp
     include/dynd/types/cstruct_type.hpp
@@ -295,8 +297,8 @@ set(libdynd_SRC
     include/dynd/types/tuple_type.hpp
     include/dynd/types/type_id.hpp
     include/dynd/types/type_pattern_match.hpp
+    include/dynd/types/typevar_constructed_type.hpp
     include/dynd/types/typevar_dim_type.hpp
-    include/dynd/types/pow_dimsym_type.hpp
     include/dynd/types/typevar_type.hpp
     include/dynd/types/unary_expr_type.hpp
     include/dynd/types/var_dim_type.hpp
