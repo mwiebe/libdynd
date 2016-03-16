@@ -18,20 +18,22 @@ public:
   std::vector<bool> m_is_base_id;
 
   type_id_t m_base_ids_2[5];
+  uint64_t m_is_base_id_2;
 
   id_info() = default;
 
-  id_info(type_id_t id, const ndt::type &tp, size_t size = 128) : m_tp(tp), m_is_base_id(size)
+  id_info(type_id_t id, const ndt::type &tp, size_t size = 128) : m_tp(tp), m_is_base_id(size), m_is_base_id_2(1ULL << id)
   {
     m_is_base_id[id] = true;
   }
 
   id_info(type_id_t id, const ndt::type &tp, const std::vector<type_id_t> &base_ids, size_t size = 128)
-      : m_tp(tp), m_base_ids(base_ids), m_is_base_id(size)
+      : m_tp(tp), m_base_ids(base_ids), m_is_base_id(size), m_is_base_id_2(1ULL << id)
   {
     m_is_base_id[id] = true;
     for (type_id_t base_id : m_base_ids) {
       m_is_base_id[base_id] = true;
+      m_is_base_id_2 |= (1ULL << base_id);
     }
 
     int i = 0;
@@ -76,7 +78,7 @@ inline bool is_base_id_of(type_id_t base_id, type_id_t id) { return ndt::type_re
 
 inline bool is_base_id_of_2(type_id_t base_id, type_id_t id)
 {
-  for (type_id_t other_id : ndt::type_registry[id].m_base_ids_2) {
+  for (auto other_id : ndt::type_registry[id].m_base_ids_2) {
     if (other_id == base_id) {
       return true;
     }

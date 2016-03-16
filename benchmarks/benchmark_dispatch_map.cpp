@@ -66,13 +66,61 @@ BENCHMARK_DEFINE_F(X, BM_IsBaseIDOf)(benchmark::State &state)
 {
   while (state.KeepRunning()) {
     for (const auto &pair : pairs) {
-      benchmark::DoNotOptimize(is_base_id_of_2(pair.first, pair.second));
+      benchmark::DoNotOptimize(is_base_id_of(pair.first, pair.second));
+      benchmark::DoNotOptimize(is_base_id_of(pair.first, pair.second));
+      benchmark::DoNotOptimize(is_base_id_of(pair.first, pair.second));
+      benchmark::DoNotOptimize(is_base_id_of(pair.first, pair.second));
+      benchmark::DoNotOptimize(is_base_id_of(pair.first, pair.second));
+      benchmark::DoNotOptimize(is_base_id_of(pair.first, pair.second));
+      benchmark::DoNotOptimize(is_base_id_of(pair.first, pair.second));
+      benchmark::DoNotOptimize(is_base_id_of(pair.first, pair.second));
+      benchmark::DoNotOptimize(is_base_id_of(pair.first, pair.second));
+      benchmark::DoNotOptimize(is_base_id_of(pair.first, pair.second));
     }
   }
   state.SetItemsProcessed(state.iterations() * state.range_x());
 }
 
 BENCHMARK_REGISTER_F(X, BM_IsBaseIDOf)->Arg(100)->Arg(1000)->Arg(10000);
+
+BENCHMARK_DEFINE_F(X, BM_IsBaseIDOf2)(benchmark::State &state)
+{
+  while (state.KeepRunning()) {
+    for (const auto &pair : pairs) {
+      benchmark::DoNotOptimize(is_base_id_of_2(pair.first, pair.second));
+    }
+  }
+  state.SetItemsProcessed(state.iterations() * state.range_x());
+}
+
+ //BENCHMARK_REGISTER_F(X, BM_IsBaseIDOf2)->Arg(100)->Arg(1000)->Arg(10000);
+
+inline bool is_base_id_of_3(type_id_t base_id, type_id_t id)
+{
+  auto bid = ndt::type_registry[id].m_is_base_id_2;
+  return (bid & (1ULL << base_id)) != 0ULL;
+}
+
+BENCHMARK_DEFINE_F(X, BM_IsBaseIDOf3)(benchmark::State &state)
+{
+  while (state.KeepRunning()) {
+    for (const auto &pair : pairs) {
+      benchmark::DoNotOptimize(is_base_id_of_3(pair.first, pair.second));
+      benchmark::DoNotOptimize(is_base_id_of_3(pair.first, pair.second));
+      benchmark::DoNotOptimize(is_base_id_of_3(pair.first, pair.second));
+      benchmark::DoNotOptimize(is_base_id_of_3(pair.first, pair.second));
+      benchmark::DoNotOptimize(is_base_id_of_3(pair.first, pair.second));
+      benchmark::DoNotOptimize(is_base_id_of_3(pair.first, pair.second));
+      benchmark::DoNotOptimize(is_base_id_of_3(pair.first, pair.second));
+      benchmark::DoNotOptimize(is_base_id_of_3(pair.first, pair.second));
+      benchmark::DoNotOptimize(is_base_id_of_3(pair.first, pair.second));
+      benchmark::DoNotOptimize(is_base_id_of_3(pair.first, pair.second));
+    }
+  }
+  state.SetItemsProcessed(state.iterations() * state.range_x());
+}
+
+BENCHMARK_REGISTER_F(X, BM_IsBaseIDOf3)->Arg(100)->Arg(1000)->Arg(10000);
 
 /*
 typedef DispatchFixture<1> UnaryDispatchFixture;
