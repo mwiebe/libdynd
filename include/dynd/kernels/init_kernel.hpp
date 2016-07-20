@@ -14,8 +14,6 @@ namespace nd {
 
   template <typename ValueType>
   struct init_kernel {
-    init_kernel(const char *DYND_UNUSED(metadata)) {}
-
     init_kernel(const ndt::type &DYND_UNUSED(tp), const char *DYND_UNUSED(metadata)) {}
 
     void single(char *data, const ValueType &value) { *reinterpret_cast<ValueType *>(data) = value; }
@@ -275,7 +273,7 @@ namespace nd {
     std::tuple<init_kernel<ElementTypes>...> children;
 
     init_kernel(const ndt::type &tp, const char *metadata)
-        : metadata(metadata), children({tp, postfix_add(metadata, ndt::traits<ElementTypes>::metadata_size)}...) {}
+        : metadata(metadata), children{{tp, postfix_add(metadata, ndt::traits<ElementTypes>::metadata_size)}...} {}
 
     void single(char *data, const std::tuple<ElementTypes...> &value) {
       for_each<type_sequence<ElementTypes...>, 0>(on_each(), metadata, children, data, value);
