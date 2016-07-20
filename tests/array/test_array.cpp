@@ -569,6 +569,12 @@ TEST(Array, ConstructTuple) {
   const auto &v = a.view<dynd::tuple<int, double>>();
   EXPECT_EQ(1, get<0>(v));
   EXPECT_EQ(2.0, get<1>(v));
+
+//  int x[2] = {0, 1};
+//  nd::array a0(std::make_tuple<int[2], int>(x, 2));
+//  std::cout << a0 << std::endl;
+
+//  std::exit(-1);
 }
 
 TEST(Array, ConstructAssign) {
