@@ -5,8 +5,8 @@
 
 #pragma once
 
-#include <dynd/type.hpp>
 #include <dynd/types/string_type.hpp>
+#include <dynd/types/tuple_type.hpp>
 #include <dynd/types/var_dim_type.hpp>
 
 namespace dynd {
@@ -272,8 +272,12 @@ namespace nd {
     const char *metadata;
     std::tuple<init_kernel<ElementTypes>...> children;
 
+    init_kernel(const ndt::type *field_tp, const char *metadata)
+        : metadata(metadata),
+          children{{*field_tp++, postfix_add(metadata, ndt::traits<ElementTypes>::metadata_size)}...} {}
+
     init_kernel(const ndt::type &tp, const char *metadata)
-        : metadata(metadata), children{{tp, postfix_add(metadata, ndt::traits<ElementTypes>::metadata_size)}...} {}
+        : init_kernel(tp.extended<ndt::tuple_type>()->get_field_types_raw(), metadata) {}
 
     void single(char *data, const std::tuple<ElementTypes...> &value) {
       for_each<type_sequence<ElementTypes...>, 0>(on_each(), metadata, children, data, value);

@@ -15,9 +15,6 @@
 #include <dynd/types/type_id.hpp>
 
 namespace dynd {
-namespace ndt {
-  class tuple_type;
-}
 
 /**
  * Increments the offset value so that it is aligned to the requested alignment
@@ -1141,6 +1138,16 @@ namespace ndt {
   */
 
   DYNDT_API std::ostream &operator<<(std::ostream &o, const type &rhs);
+
+  template <>
+  struct traits<type> {
+    static const size_t ndim = 0;
+
+    static const bool is_same_layout = true;
+
+    static type equivalent() { return ndt::type("type"); }
+  };
+
 
 } // namespace dynd::ndt
 
