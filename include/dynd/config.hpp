@@ -32,7 +32,7 @@
 /** The number of elements to process at once when doing chunking/buffering */
 #define DYND_BUFFER_CHUNK_SIZE 128
 
-#ifdef __clang__
+#if defined(__clang__) && !defined(_MSC_VER)
 
 #if __has_feature(cxx_constexpr)
 #define DYND_CONSTEXPR constexpr
