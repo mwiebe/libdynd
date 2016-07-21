@@ -258,6 +258,7 @@ namespace nd {
                                                          ndt::traits<ValueType>::is_same_layout>::init_from_c_array;
   };
 
+#if !defined(_MSC_VER) || defined(__clang__) // TEMPORARY: until MSVC variadic problem is worked out
   template <typename... ElementTypes>
   struct init_kernel<std::tuple<ElementTypes...>> {
     struct on_each {
@@ -283,6 +284,7 @@ namespace nd {
       for_each<type_sequence<ElementTypes...>, 0>(on_each(), metadata, children, data, value);
     }
   };
+#endif
 
 } // namespace dynd::nd
 } // namespace dynd
