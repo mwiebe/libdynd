@@ -69,7 +69,9 @@ public:
     shortvector(size_t size, const T* data)
         : m_data((size <= staticN) ? m_shortdata : new T[size])
     {
-        DYND_MEMCPY(m_data, data, size * sizeof(T));
+        if (size > 0) {
+            DYND_MEMCPY(m_data, data, size * sizeof(T));
+        }
     }
 
     /** Move constructor */
