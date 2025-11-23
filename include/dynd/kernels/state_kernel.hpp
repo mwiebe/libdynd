@@ -25,6 +25,11 @@ namespace nd {
 
     void single(char *dst, char *const *src) {
       char *child_src[NArg + 1];
+      // Disable array-bounds warning for gcc - false positive from aggressive optimization
+      #if defined(__GNUC__) && !defined(__clang__)
+        #pragma GCC diagnostic push
+        #pragma GCC diagnostic ignored "-Warray-bounds"
+      #endif
       for (size_t j = 0; j < i; ++j) {
         child_src[j] = src[j];
       }
@@ -32,6 +37,9 @@ namespace nd {
       for (size_t j = i; j < NArg; ++j) {
         child_src[j + 1] = src[j];
       }
+      #if defined(__GNUC__) && !defined(__clang__)
+        #pragma GCC diagnostic pop
+      #endif
 
       this->get_child()->single(dst, child_src);
     }

@@ -33,6 +33,11 @@ namespace nd {
           kb.emplace_back<outer_kernel<NArg>>(kernreq, i, dst_arrmeta, src_arrmeta);
 
           const char *src_element_arrmeta[NArg];
+          // Disable array-bounds warning for gcc - false positive from aggressive optimization
+          #if defined(__GNUC__) && !defined(__clang__)
+            #pragma GCC diagnostic push
+            #pragma GCC diagnostic ignored "-Warray-bounds"
+          #endif
           for (size_t j = 0; j < i; ++j) {
             src_element_arrmeta[j] = src_arrmeta[j];
           }
@@ -40,6 +45,9 @@ namespace nd {
           for (size_t j = i + 1; j < NArg; ++j) {
             src_element_arrmeta[j] = src_arrmeta[j];
           }
+          #if defined(__GNUC__) && !defined(__clang__)
+            #pragma GCC diagnostic pop
+          #endif
 
           kb(kernel_request_strided, data, dst_arrmeta + sizeof(size_stride_t), NArg, src_element_arrmeta);
         });

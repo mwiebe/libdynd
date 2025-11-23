@@ -145,7 +145,24 @@ namespace ndt {
     type(const char *rep_begin, const char *rep_end);
 
     bool operator==(const type &rhs) const {
-      return m_ptr == rhs.m_ptr || (!is_builtin() && !rhs.is_builtin() && *m_ptr == *rhs.m_ptr);
+      if (m_ptr == rhs.m_ptr) {
+        return true;
+      }
+      if (is_builtin() || rhs.is_builtin()) {
+        return false;
+      }
+      if (m_ptr == NULL || rhs.m_ptr == NULL) {
+        return false;
+      }
+      // Disable array-bounds warning for gcc - false positive from aggressive optimization
+      #if defined(__GNUC__) && !defined(__clang__)
+        #pragma GCC diagnostic push
+        #pragma GCC diagnostic ignored "-Warray-bounds"
+      #endif
+      return *m_ptr == *rhs.m_ptr;
+      #if defined(__GNUC__) && !defined(__clang__)
+        #pragma GCC diagnostic pop
+      #endif
     }
 
     bool operator!=(const type &rhs) const { return !(operator==(rhs)); }
